@@ -12,7 +12,7 @@
       padding: 0;
       overflow-x: hidden; /* Prevent horizontal scrolling */
       background-color: #f4f4f4; /* Background color */
-      text-align: center; /* Center align text */
+      text-align: left; /* Center align text */
     }
 
     /* Header section with logo and text */
@@ -121,6 +121,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-top: 20px;
       overflow: hidden; /* Hide any overflowing content */
     }
 
@@ -156,9 +157,11 @@
 
     input[type="text"],
     input[type="email"],
-    input[type="tel"] {
-      padding: 8px;
-      margin: 5px;
+    input[type="tel"],
+    select {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
       border-radius: 5px;
       border: 1px solid #ccc;
     }
@@ -177,28 +180,15 @@
       background-color: #0056b3;
     }
 
-    /* Responsive layout */
-    @media (max-width: 768px) {
-      .logo-container {
-        margin-left: 10px;
-      }
-
-      .logo-text {
-        margin-left: 10px;
-      }
-
-      .card {
-        padding: 20px; /* Adjust padding for smaller screens */
-        width: 90%; /* Set card width for smaller screens */
-      }
-
-      h1.title {
-        animation: none; /* Disable animation on smaller screens */
-      }
-
-      .button-container {
-        animation: none; /* Disable animation on smaller screens */
-      }
+    /* Footer */
+    .footer {
+      position: relative;
+      background-color: #001f3f; /* Same color as header */
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      border-radius: 20px 20px 0 0; /* Only top edges rounded */
+      margin-top: 20px; /* Add space between card and footer */
     }
   </style>
 </head>
@@ -213,9 +203,9 @@
       </a>
     </div>
   </header>
-<div class="container">
+  <div class="container">
     <div class="card">
-      <h1 class="title">Search</h1>
+      <h1 class="title">Application Form</h1>
       <form action="/search" method="post" onsubmit="return validateForm()">
         <label for="query">Application ID:</label>
         <input type="text" name="query" id="query" placeholder="Enter Application ID" required>
@@ -223,13 +213,13 @@
         <label for="check_value">Enter Name:</label>
         <input type="text" name="check_value" id="check_value" placeholder="Enter Name">
         <br>
-	<label for="department">Select Department:</label>
-	<select name="department" id="department">
-  	<option value="ENTC">ENTC Department</option>
-  	<option value="Computer">Computer Department</option>
-  	<option value="Mechanical">Mechanical Department</option>
-	</select>
-	<br>
+        <label for="department">Select Department:</label>
+        <select name="department" id="department">
+          <option value="ENTC">ENTC Department</option>
+          <option value="Computer">Computer Department</option>
+          <option value="Mechanical">Mechanical Department</option>
+        </select>
+        <br>
         <label for="email">Email:</label>
         <input type="email" name="email" id="email" placeholder="Enter Email Address" required>
         <div id="email-error" class="error-message"></div>
@@ -278,5 +268,17 @@
       return isValid;
     }
   </script>
+  <footer class="footer">
+    <div>
+      <h3>CONTACT US</h3>
+      Telephone : (020)-26163831 | 
+      Admission Enquiry : +91 7798883400 |
+      Email : info@mescoepune.org
+     </div>
+    <div><br>
+      <hr/>
+      Copyright © 2023 Modern Education Society
+    </div>
+  </footer>
 </body>
 </html>
