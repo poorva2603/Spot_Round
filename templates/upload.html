@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload PDF</title>
+  <style>
+    /* CSS from index.html */
+    /* Global styles */
+    body {
+      font-family: sans-serif; /* Set font to sans-serif */
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+
+    /* Header section with logo and text */
+    .header {
+      display: flex;
+      align-items: center; /* Aligns vertically */
+      justify-content: center; /* Aligns horizontally */
+      padding: 20px 20px; /* Optional padding */
+      position: relative;
+      z-index: 2; /* Ensure header stays above other content */
+      margin-bottom: 20px; /* Add space between header and card */
+      
+      height: 20%; /* Set height of the header */
+      min-height: 100px; /* Set a minimum height for the header */
+      max-height: 150px; /* Set a maximum height for the header */
+      background-color: #001f3f; /* Dark blue background color */
+      border-radius: 0 0 20px 20px; /* Only bottom edges rounded */
+      animation: slideDown 2s forwards; /* Animation for sliding down the header */
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center; /* Aligns logo and text vertically */
+      margin-left: 20px;
+    }
+
+    .logo {
+      width: 80px; /* Adjust the width to make the logo smaller */
+      height: auto;
+      max-height: 100px; /* Ensure the logo doesn't exceed 100px in height */
+      background-size: cover;
+      background-position: center;
+      cursor: pointer; /* Make the logo clickable */
+    }
+
+    .logo img {
+      width: 100%; /* Make the image fill the container */
+      height: auto; /* Maintain aspect ratio */
+    }
+
+    .logo-text {
+      font-size: 14px;
+      color: #fff; /* White text color */
+      line-height: 1.5;
+      margin-left: 20px;
+      cursor: pointer; /* Make the text clickable */
+      text-decoration: none; /* Remove underline */
+      transition: color 0.3s ease; /* Add transition effect for color change */
+    }
+
+    .logo-text:hover {
+      color: #ccc; /* Change text color on hover */
+    }
+
+    /* Rest of your styles remain the same: */
+    h1.title {
+      margin: 20px 0; /* Adjust top margin */
+      color: #333;
+      font-weight: bold;
+      text-align: center;
+      animation: slideFromRight 1.5s forwards; /* Animation for sliding from right */
+    }
+
+    @keyframes slideFromRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .button-container {
+      text-align: center;
+      animation: slideFromLeft 1.5s forwards; /* Animation for sliding from left */
+      margin-bottom: 20px; /* Add space below the buttons */
+    }
+
+    @keyframes slideFromLeft {
+      from {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Responsive layout */
+    @media (max-width: 768px) {
+      .logo-container {
+        margin-left: 10px;
+      }
+
+      .logo-text {
+        margin-left: 10px;
+      }
+
+      .card {
+        padding: 20px; /* Adjust padding for smaller screens */
+        width: 90%; /* Set card width for smaller screens */
+      }
+
+      h1.title {
+        animation: none; /* Disable animation on smaller screens */
+      }
+
+      .button-container {
+        animation: none; /* Disable animation on smaller screens */
+      }
+    }
+    
+    /* Additional CSS for card animation */
+    .card {
+      background-color: #ffffcc; /* Lighter yellow background color */
+      border-radius: 20px;
+      padding: 40px; /* Increase padding */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Add shadow */
+      animation: slideIn 2s forwards; /* Animation for sliding in the card */
+      width: 80%; /* Set card width */
+      max-width: 500px; /* Set maximum card width */
+      margin: 0 auto; /* Center the card horizontally */
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Styles for file upload */
+    .file-upload {
+      margin-bottom: 20px;
+    }
+
+    .file-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border: 2px dashed #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+
+    .file-label img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .file-label:hover {
+      border-color: #007bff;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    /* CSS for buttons */
+    .btn-view, .btn-finish, .btn-upload {
+      padding: 15px 30px; /* Increase button padding */
+      font-size: 18px; /* Increase button font size */
+      background-color: #007bff; /* Blue button color */
+      color: #fff;
+      border: none;
+      border-radius: 8px; /* Increase button border radius */
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 0 10px; /* Add space between buttons */
+    }
+
+    .btn-view:hover, .btn-finish:hover, .btn-upload:hover {
+      background-color: #0056b3;
+    }
+    #success_msg{
+      text-align:center;
+      color:green;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo-container">
+      <a href="https://mescoe.mespune.org/" class="logo-text" style="display: flex; align-items: center; color: #fff;">
+        <div class="logo">
+          <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        </div>
+        <p class="logo-text">Modern Education Society's Wadia College of Engineering, Pune (Wadia College Campus)<br>Affiliated to SPPU, Approved by AICTE, Accredited by NAAC with 'A++' Grade, Accredited by NBA</p>
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+
+ 
+
+    <div class="card">
+      <h1 class="title">Upload PDF Files</h1>
+      <div class="button-container">
+        <button class="btn-view" onclick="location.href='{{ url_for('view_merit_lists') }}'">View Merit Lists</button>
+
+        <form method="POST" enctype="multipart/form-data" action="/upload" class="upload-form">
+          <div class="file-upload">
+		<br>
+            <label for="file1" class="file-label">
+              Choose JEE PDF
+            </label>
+            <input type="file" name="file1" id="file1" accept=".pdf" required>
+          </div>
+          <div class="file-upload">
+            <label for="file2" class="file-label">
+              Choose CET PDF
+            </label>
+            <input type="file" name="file2" id="file2" accept=".pdf" required>
+          </div>
+          <input type="submit" value="Upload" class="btn-upload">
+        </form>
+	<form method="POST" action="/finish_round">
+          <br><input type="submit" value="Finish Round" class="btn-finish">
+        </form>
+      </div>
+
+      </div>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class="flashes">
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+      {% if request.method == 'POST' %}
+        {% if 'File has already been uploaded and converted' not in get_flashed_messages() %}
+          <p id="success_msg">Files uploaded and converted successfully!</p>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+</body>
+</html>
+                 

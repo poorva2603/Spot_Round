@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome</title>
+  <style>
+    /* Global styles */
+    body {
+      font-family: sans-serif; /* Set font to sans-serif */
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+
+    /* Header section with logo and text */
+    .header {
+      display: flex;
+      align-items: center; /* Aligns vertically */
+      justify-content: center; /* Aligns horizontally */
+      padding: 10px 20px; /* Optional padding */
+      position: relative;
+      z-index: 2; /* Ensure header stays above other content */
+      
+      height: 20%; /* Set height of the header */
+      min-height: 100px; /* Set a minimum height for the header */
+      max-height: 150px; /* Set a maximum height for the header */
+      background-color: #001f3f; /* Dark blue background color */
+      border-radius: 0 0 20px 20px; /* Only bottom edges rounded */
+      animation: slideDown 2s forwards; /* Animation for sliding down the header */
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center; /* Aligns logo and text vertically */
+      margin-left: 20px;
+    }
+
+    .logo {
+      width: 80px; /* Adjust the width to make the logo smaller */
+      height: auto;
+      max-height: 100px; /* Ensure the logo doesn't exceed 100px in height */
+      background-size: cover;
+      background-position: center;
+      cursor: pointer; /* Make the logo clickable */
+    }
+
+    .logo img {
+      width: 100%; /* Make the image fill the container */
+      height: auto; /* Maintain aspect ratio */
+    }
+
+    .logo-text {
+      font-size: 14px;
+      color: #fff; /* White text color */
+      line-height: 1.5;
+      margin-left: 20px;
+      cursor: pointer; /* Make the text clickable */
+      text-decoration: none; /* Remove underline */
+      transition: color 0.3s ease; /* Add transition effect for color change */
+    }
+
+    .logo-text:hover {
+      color: #ccc; /* Change text color on hover */
+    }
+
+    /* Rest of your styles remain the same: */
+    h1.title {
+      margin: 20px 0; /* Adjust top margin */
+      color: #333;
+      font-weight: bold;
+      text-align: center;
+      animation: slideFromRight 1.5s forwards; /* Animation for sliding from right */
+    }
+
+    @keyframes slideFromRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .button-container {
+      text-align: center;
+      animation: slideFromLeft 1.5s forwards; /* Animation for sliding from left */
+    }
+
+    @keyframes slideFromLeft {
+      from {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .container {
+      position: relative;
+      height: 80%; /* Set height of the container to occupy the remaining viewport height */
+      min-height: calc(100vh - 150px); /* Set a minimum height for the container */
+      max-height: calc(100vh - 100px); /* Set a maximum height for the container */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* Hide any overflowing content */
+    }
+
+    .card {
+      background-color: #ffffcc; /* Lighter yellow background color */
+      border-radius: 20px;
+      padding: 40px; /* Increase padding */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Add shadow */
+      animation: slideIn 2s forwards; /* Animation for sliding in the card */
+      width: 80%; /* Set card width */
+      max-width: 500px; /* Set maximum card width */
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    button {
+      padding: 15px 30px; /* Increase button padding */
+      margin: 20px 10px; /* Adjust button margin */
+      font-size: 18px; /* Increase button font size */
+      background-color: #007bff; /* Blue button color */
+      color: #fff;
+      border: none;
+      border-radius: 8px; /* Increase button border radius */
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Responsive layout */
+    @media (max-width: 768px) {
+      .logo-container {
+        margin-left: 10px;
+      }
+
+      .logo-text {
+        margin-left: 10px;
+      }
+
+      .card {
+        padding: 20px; /* Adjust padding for smaller screens */
+        width: 90%; /* Set card width for smaller screens */
+      }
+
+      h1.title {
+        animation: none; /* Disable animation on smaller screens */
+      }
+
+      .button-container {
+        animation: none; /* Disable animation on smaller screens */
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo-container">
+      <a href="https://mescoe.mespune.org/" class="logo-text" style="display: flex; align-items: center; color: #fff;">
+        <div class="logo">
+          <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        </div>
+        <p class="logo-text">Modern Education Society's Wadia College of Engineering, Pune (Wadia College Campus)<br>Affiliated to SPPU, Approved by AICTE, Accredited by NAAC with 'A++' Grade, Accredited by NBA</p>
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h1 class="title">Welcome to Merit List Portal</h1>
+      <div class="button-container">
+        <button onclick="location.href='{{ url_for('admin_login') }}'">Admin Login</button>
+        <button onclick="location.href='{{ url_for('search') }}'">Applicant Login</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

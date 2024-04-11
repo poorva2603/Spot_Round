@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Results</title>
+  <style>
+    /* Global styles */
+    body {
+      font-family: sans-serif; /* Set font to sans-serif */
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+      background-color: #f4f4f4; /* Background color */
+      text-align: center; /* Center align text */
+    }
+
+    /* Header section with logo and text */
+    .header {
+      display: flex;
+      align-items: center; /* Aligns vertically */
+      justify-content: center; /* Aligns horizontally */
+      padding: 10px 20px; /* Optional padding */
+      position: relative;
+      z-index: 2; /* Ensure header stays above other content */
+      
+      height: 20%; /* Set height of the header */
+      min-height: 100px; /* Set a minimum height for the header */
+      max-height: 150px; /* Set a maximum height for the header */
+      background-color: #001f3f; /* Dark blue background color */
+      border-radius: 0 0 20px 20px; /* Only bottom edges rounded */
+      animation: slideDown 2s forwards; /* Animation for sliding down the header */
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center; /* Aligns logo and text vertically */
+      margin-left: 20px;
+    }
+
+    .logo {
+      width: 80px; /* Adjust the width to make the logo smaller */
+      height: auto;
+      max-height: 100px; /* Ensure the logo doesn't exceed 100px in height */
+      background-size: cover;
+      background-position: center;
+      cursor: pointer; /* Make the logo clickable */
+    }
+
+    .logo img {
+      width: 100%; /* Make the image fill the container */
+      height: auto; /* Maintain aspect ratio */
+    }
+
+    .logo-text {
+      font-size: 14px;
+      color: #fff; /* White text color */
+      line-height: 1.5;
+      margin-left: 20px;
+      cursor: pointer; /* Make the text clickable */
+      text-decoration: none; /* Remove underline */
+      transition: color 0.3s ease; /* Add transition effect for color change */
+    }
+
+    .logo-text:hover {
+      color: #ccc; /* Change text color on hover */
+    }
+
+    /* Rest of your styles remain the same */
+    .container {
+      position: relative;
+      height: calc(110vh - 100px); /* Set height of the container to occupy the remaining viewport height */
+      min-height: 200px; /* Set a minimum height for the container */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* Hide any overflowing content */
+    }
+
+    .result-container {
+      margin: 20px;
+    }
+
+    .card {
+      background-color: #ffffcc; /* Lighter yellow background color */
+      border-radius: 20px;
+      padding: 20px; /* Increase padding */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Add shadow */
+      animation: slideIn 2s forwards; /* Animation for sliding in the card */
+      width: 100%; /* Set card width */
+      max-width: 700px; /* Set maximum card width */
+      height: auto; /* Set height to auto */
+      max-height: 80vh; /* Set maximum card height */
+      overflow-y: auto; /* Enable vertical scroll if content exceeds max height */
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Apply the same styling to form elements */
+    form {
+      margin-top: 30px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      padding: 8px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Responsive layout */
+    @media (max-width: 768px) {
+      .logo-container {
+        margin-left: 10px;
+      }
+
+      .logo-text {
+        margin-left: 10px;
+      }
+
+      .card {
+        padding: 20px; /* Adjust padding for smaller screens */
+        width: 100%; /* Set card width for smaller screens */
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo-container">
+      <a href="https://mescoe.mespune.org/" class="logo-text" style="display: flex; align-items: center; color: #fff;">
+        <div class="logo">
+          <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        </div>
+        <p class="logo-text">Modern Education Society's Wadia College of Engineering, Pune (Wadia College Campus)<br>Affiliated to SPPU, Approved by AICTE, Accredited by NAAC with 'A++' Grade, Accredited by NBA</p>
+      </a>
+    </div>
+  </header>
+
+  <h1>Search Results</h1>
+  
+  {% if cross_checked %}
+    <div class="container">
+      {% if results_dict.get('jee') %}
+        <div class="result-container">
+          <h2 class="result-heading">JEE Results</h2>
+          <div class="card">
+            {% for row in results_dict.get('jee') %}
+              {% for key, value in row.items() %}
+                <label class="result-label">{{ key }}:</label>
+                <input type="text" class="result-value" value="{{ value }}" readonly><br>
+              {% endfor %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      
+      {% if results_dict.get('cet') %}
+        <div class="result-container">
+          <h2 class="result-heading">CET Results</h2>
+          <div class="card">
+            {% for row in results_dict.get('cet') %}
+              <label class="result-label">Merit No:</label>
+              <input type="text" class="result-value" value="{{ row["Note : $ - Indicates that Candidate has uploaded the receipt of Caste Validity Certificate / Tribe Validity Certificate,  @ - Indicates that Candidate has uploaded the receipt of EWS Certificate, # - Indicates that Candidate has uploaded the receipt of NON Creamy layer Certificate."] }}" readonly><br>
+              <label class="result-label">Application ID:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 0"] }}" readonly><br>
+              <label class="result-label">Candidate's Full Name:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 1"] }}" readonly><br>
+              <label class="result-label">Merit Exam:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 2"] }}" readonly><br>
+              <label class="result-label">Category:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 3"] }}" readonly><br>
+              <label class="result-label">Gender:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 4"] }}" readonly><br>
+              <label class="result-label">PWD / Def:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 5"] }}" readonly><br>
+              <label class="result-label">EWS:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 6"] }}" readonly><br>
+              <label class="result-label">TFWS:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 7"] }}" readonly><br>
+              <label class="result-label">Orphan:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 8"] }}" readonly><br>
+              <label class="result-label">Minority Type (LM/RM):</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 9"] }}" readonly><br>
+              <label class="result-label">Percentile/Mark:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 10"] }}" readonly><br>
+              <label class="result-label">MHT-CET Math Percentile:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 11"] }}" readonly><br>
+              <label class="result-label">MHT-CET Physics Percentile:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 12"] }}" readonly><br>
+              <label class="result-label">MHT-CET Chemistry Percentile:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 13"] }}" readonly><br>
+              <label class="result-label">HSC PCM %:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 14"] }}" readonly><br>
+              <label class="result-label">HSC Math %:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 15"] }}" readonly><br>
+              <label class="result-label">HSC Physics %:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 16"] }}" readonly><br>
+              <label class="result-label">HSC / Diploma / D.Voc. Total %:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 17"] }}" readonly><br>
+              <label class="result-label">SSC Total %:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 18"] }}" readonly><br>
+              <label class="result-label">SSC Math %:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 19"] }}" readonly><br>
+              <label class="result-label">SSC Science %:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 20"] }}" readonly><br>
+              <label class="result-label">SSC English %:</label>
+              <input type="text" class="result-value" value="{{ row["Unnamed: 21"] }}" readonly><br>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    <p><a href="{{ url_for('search') }}">Back to Search</a></p>
+  {% else %}
+    <p>No results found matching the check value.</p>
+  {% endif %}
+  
+</body>
+</html>
